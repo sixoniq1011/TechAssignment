@@ -1,0 +1,1676 @@
+{
+	"info": {
+		"_postman_id": "93771366-a8e5-4bf1-9d54-935c6edb6033",
+		"name": "API Automation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34884273"
+	},
+	"item": [
+		{
+			"name": "Positive",
+			"item": [
+				{
+					"name": "About",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const token = jsonData.token;\r",
+									"\r",
+									"pm.test(\" Verify that Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"\r",
+									"    pm.test(\"Verify that Status code is 200\", function () {\r",
+									"        pm.response.to.have.status(200);\r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Verify that Version field is not null\", function () {\r",
+									"        pm.expect(jsonData.token).to.not.be.null\r",
+									"    })\r",
+									"\r",
+									"    pm.test(\"Verify that homepage field is not null\", function () {\r",
+									"        pm.expect(jsonData.homepage).to.not.be.null\r",
+									"    })\r",
+									"\r",
+									"    pm.test(\"Verify that source_code field is not null\", function () {\r",
+									"        pm.expect(jsonData.source_code).to.not.be.null\r",
+									"    })\r",
+									"\r",
+									"    pm.test(\"Verify that maintainer field is not null\", function () {\r",
+									"        pm.expect(jsonData.maintainer).to.not.be.null\r",
+									"    })\r",
+									"\r",
+									"    pm.test(\"Verify that Version Field is not an integer\", function () {\r",
+									"        pm.expect(jsonData.version).to.not.be.a('number');\r",
+									"    })\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com"
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/about",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"about"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Submission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const token = jsonData.token;\r",
+									"pm.globals.set(\"submissionToken\", token);\r",
+									"\r",
+									"pm.test(\"Verify that Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify that Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"language_id\": 55,\r\n    \"source_code\": \"I2luY2x1ZGUgPHN0ZGlvLmg+CgppbnQgbWFpbih2b2lkKSB7CiAgY2hhciBuYW1lWzEwXTsKICBzY2FuZigiJXMiLCBuYW1lKTsKICBwcmludGYoImhlbGxvLCAlc1xuIiwgbmFtZSk7CiAgcmV0dXJuIDA7Cn0=\",\r\n    \"stdin\": \"{{$randomNoun}}\"\r\n     }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=true&fields=*",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"submissions"
+							],
+							"query": [
+								{
+									"key": "base64_encoded",
+									"value": "true"
+								},
+								{
+									"key": "fields",
+									"value": "*"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Submission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify that Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"pm.test(\"Verify that Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com"
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/submissions/{{submissionToken}}?base64_encoded=true&fields=*",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"submissions",
+								"{{submissionToken}}"
+							],
+							"query": [
+								{
+									"key": "base64_encoded",
+									"value": "true"
+								},
+								{
+									"key": "fields",
+									"value": "*"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Batched Submission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"const jsonData = pm.response.json();\r",
+									"const token = jsonData[0].token;\r",
+									"const token2 = jsonData[1].token;\r",
+									"pm.globals.set(\"batchSubmissionToken\", token);\r",
+									"pm.globals.set(\"batchSubmissionToken2\", token2);\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that Response status code is 201\", function () {\r",
+									"    pm.expect(pm.response.to.have.status(201));\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that Token field should exist and be a string\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('array');\r",
+									"  responseData.forEach(function(item) {\r",
+									"    pm.expect(item.token).to.exist;\r",
+									"    pm.expect(item.token).to.be.a('string');\r",
+									"  });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that Response time is less than 1000ms00ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"submissions\": [\r\n      {\r\n        \"language_id\": \"46\",\r\n        \"source_code\": \"ZWNobyBoZWxsbyBmcm9tIEJhc2gK\"\r\n      },\r\n      {\r\n        \"language_id\": \"71\",\r\n        \"source_code\": \"cHJpbnQoImhlbGxvIGZyb20gUHl0aG9uIikK\"\r\n      },\r\n      {\r\n        \"language_id\": \"72\",\r\n        \"source_code\": \"cHV0cygiaGVsbG8gZnJvbSBSdWJ5IikK\"\r\n      }\r\n    ]\r\n}\r\n    ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/submissions/batch?base64_encoded=true",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"submissions",
+								"batch"
+							],
+							"query": [
+								{
+									"key": "base64_encoded",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Batched Submission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Verify that Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that Response time is less than 1000ms00ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that Response has the required fields\", function () {\r",
+									"    \r",
+									"    pm.expect(responseData).to.have.property('submissions');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that Response has the Content-Type header set to application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify that Status id is not null \", function() {\r",
+									"      pm.expect(responseData.submissions[0].status.id).to.not.be.null\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Verify that language id is not null \", function() {\r",
+									"      pm.expect(responseData.submissions[0].language.id).to.not.be.null\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Verify enable_network data type is boolean\", function() {\r",
+									"     pm.expect(typeof responseData.submissions[0].enable_network).to.eql(\"boolean\");\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com"
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/submissions/batch?tokens={{batchSubmissionToken}},{{batchSubmissionToken2}}&base64_encoded=true&fields=*",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"submissions",
+								"batch"
+							],
+							"query": [
+								{
+									"key": "tokens",
+									"value": "{{batchSubmissionToken}},{{batchSubmissionToken2}}"
+								},
+								{
+									"key": "base64_encoded",
+									"value": "true"
+								},
+								{
+									"key": "fields",
+									"value": "*"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Language",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const token = jsonData.token;\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.globals.set(\"languageId\", jsonData[0].id);\r",
+									"pm.globals.set(\"languageName\", jsonData[0].name)\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has the required fields - id and name\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"    responseData.forEach(function(item) {\r",
+									"        pm.expect(item).to.have.property('id');\r",
+									"        pm.expect(item).to.have.property('name');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response is an array with at least one element\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com"
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/languages",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"languages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Language",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseData = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that Content-Type header is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that Validate the response schema for required fields\", function () {\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData).to.have.property('id');\r",
+									"    pm.expect(responseData).to.have.property('name');\r",
+									"    pm.expect(responseData).to.have.property('is_archived');\r",
+									"    pm.expect(responseData).to.have.property('source_file');\r",
+									"    pm.expect(responseData).to.have.property('compile_cmd');\r",
+									"    pm.expect(responseData).to.have.property('run_cmd');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify that Language id is same as data\", function() {\r",
+									"\r",
+									"    pm.expect(responseData.name).to.eql(pm.globals.get(\"languageName\"));\r",
+									"\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Verify that Response time is less than 100000ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"pm.test(\"Verify that Check if is_archived is a boolean\", function () {\r",
+									"  pm.expect(pm.response.json().is_archived).to.be.a('boolean');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com"
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/languages/{{languageId}}",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"languages",
+								"{{languageId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Statuses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify that Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that Response time is less than 1000ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that Response has the required fields - id and description\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"    responseData.forEach(function(item) {\r",
+									"        pm.expect(item).to.have.property('id');\r",
+									"        pm.expect(item).to.have.property('description');\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com"
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/statuses",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"statuses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Configuration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify that Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Verify that Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com"
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/config_info",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"config_info"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Negative",
+			"item": [
+				{
+					"name": "About",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Verify that Error message is not empty\", function () {\r",
+									"    pm.expect(pm.response.json().message).to.not.be.empty;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify that Status code is 401 for invalid input\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(401);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/about",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"about"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "About without Input",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify that Response status code is 426\", function () {",
+									"    pm.expect(pm.response.code).to.equal(426);",
+									"});",
+									"",
+									"pm.test(\"Verify that Response has the required field - message\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.message).to.exist;",
+									"});",
+									"",
+									"pm.test(\"Verify that Response time is within the acceptable range\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1200);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd",
+								"disabled": true
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "judge0-ce.p.rapidapi.com/about';;",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"about';;"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Submission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const token = jsonData.token;\r",
+									"pm.globals.set(\"SubmissionToken\", token);\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify that Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n    \"language_id\": \"52\",\r\n    \"source_code\": \"I2luY2x1ZGUgPHN0ZGlvLmg+CgppbnQgbWFpbih2b2lkKSB7CiAgY2hhciBuYW1lWzEwXTsKICBzY2FuZigiJXMiLCBuYW1lKTsKICBwcmludGYoImhlbGxvLCAlc1xuIiwgbmFtZSk7CiAgcmV0dXJuIDA7Cn0=\",\r\n    \"stdin\": \"SnVkZ2Uw\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=true",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"submissions"
+							],
+							"query": [
+								{
+									"key": "base64_encoded",
+									"value": "true"
+								},
+								{
+									"key": "fields",
+									"value": "*'",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Submission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify that Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"\r",
+									"pm.test(\"Verify that Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com"
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/submissions/{{SubmissionToken}}?base64_encoded=true&fields=*",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"submissions",
+								"{{SubmissionToken}}"
+							],
+							"query": [
+								{
+									"key": "base64_encoded",
+									"value": "true"
+								},
+								{
+									"key": "fields",
+									"value": "*"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Batched Submission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify that Response status code is 400\", function () {\r",
+									"    pm.expect(pm.response.to.have.status(400));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify that Response time is less than 1000ms00ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"submissions\": [\r\n      {\r\n        \"language_id\": \"46\"\r\n        \"source_code\": \"ZWNobyBoZWxsbyBmcm9tIEJhc2gK\"\r\n      }\r\n      {\r\n        \"language_id\": \"71\",\r\n        \"source_code\": \"cHJpbnQoImhlbGxvIGZyb20gUHl0aG9uIikK\"\r\n      },\r\n      {\r\n        \"language_id\": \"72\",\r\n        \"source_code\": \"cHV0cygiaGVsbG8gZnJvbSBSdWJ5IikK\"\r\n      }\r\n    ]\r\n}\r\n    ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/submissions/batch?base64_encoded=true",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"submissions",
+								"batch"
+							],
+							"query": [
+								{
+									"key": "base64_encoded",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Batched Submission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is not 401\", function () {\r",
+									"    pm.expect(pm.response.code).to.not.equal(401);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has Content-Type of application/json\", function () {\r",
+									"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/submissions/batch?fields='*&'tokens'=dce7bbc5-a8c9-1ed737ca-ee34-454d-a06f-bbc73836473e,9670af73-519f-4136-869c-340086d406db",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"submissions",
+								"batch"
+							],
+							"query": [
+								{
+									"key": "base64_encoded",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "fields",
+									"value": "'*"
+								},
+								{
+									"key": "'tokens'",
+									"value": "dce7bbc5-a8c9-1ed737ca-ee34-454d-a06f-bbc73836473e,9670af73-519f-4136-869c-340086d406db"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Language",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Verify that Response status code is 401\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(401);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that the response message is descriptive for the error\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData.message).to.exist.and.to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that Message should not be empty for invalid input scenarios\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData.message).to.exist.and.to.not.be.empty;\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key'''",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com"
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/languages/52'",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"languages",
+								"52'"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Language",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Verify that Response status code is 404\", function () {\r",
+									"  pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify that Response time is less than 400ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com"
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/languages;",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"languages;"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Statuses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Verify that Response status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify that Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0''"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com''"
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/statuses",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"statuses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Configuration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify that Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Verify that Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com"
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/config_info",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"config_info"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bugs",
+			"item": [
+				{
+					"name": "About",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0",
+								"disabled": true
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "'https://jud4ge0-ce.,p.rapidapi.com/about'",
+							"protocol": "'https",
+							"host": [
+								"jud4ge0-ce",
+								",p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"about'"
+							],
+							"query": [
+								{
+									"key": "1",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "About",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com"
+							}
+						],
+						"url": {
+							"raw": "'https://jud4ge0-ce.,p.rapidapi.com/about'?1=1",
+							"protocol": "'https",
+							"host": [
+								"jud4ge0-ce",
+								",p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"about'"
+							],
+							"query": [
+								{
+									"key": "1",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Batched Submission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"submissions\": [\r\n      {\r\n    \r\n        \"source_code\": \"cHJpbnQoImhlbGxvIGZyb20gUHl0aG9uIikK\"\r\n      },\r\n      {\r\n        \"language_id\": \"72\",\r\n        \"source_code\": \"cHV0cygiaGVsbG8gZnJvbSBSdWJ5IikK\"\r\n      }\r\n    ]\r\n}\r\n    ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/submissions/batch?base64_encoded=true",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"submissions",
+								"batch"
+							],
+							"query": [
+								{
+									"key": "base64_encoded",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Batched Submission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.in",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/submissions/batch?tokens=dce7bbc5-a8c9-4159-a28f-ac264e48c371,1ed737ca-ee34-454d-a06f-bbc73836473e,9670af73-519f-4136-869c",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"submissions",
+								"batch"
+							],
+							"query": [
+								{
+									"key": "base64_encoded",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "fields",
+									"value": "*",
+									"disabled": true
+								},
+								{
+									"key": "tokens",
+									"value": "dce7bbc5-a8c9-4159-a28f-ac264e48c371,1ed737ca-ee34-454d-a06f-bbc73836473e,9670af73-519f-4136-869c"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Language",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/languages/52",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"languages",
+								"52"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Language",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/languages",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"languages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Statuses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/statuses",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"statuses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Configuration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-RapidAPI-Key",
+								"value": "ca587a2279mshdf38e9b48a2db71p1adeddjsn59054e3bd5d0"
+							},
+							{
+								"key": "X-RapidAPI-Host",
+								"value": "judge0-ce.p.rapidapi.com",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://judge0-ce.p.rapidapi.com/config_info",
+							"protocol": "https",
+							"host": [
+								"judge0-ce",
+								"p",
+								"rapidapi",
+								"com"
+							],
+							"path": [
+								"config_info"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
